@@ -1,0 +1,72 @@
+
+    <div class="mt-4">
+      <h4>Documents</h4>
+      <table class="table table-bordered" *ngIf="documents.length > 0; else noDocs">
+        <thead>
+          <tr>
+            <th>File Name</th>
+            <th>Description</th>
+            <th>Size (KB)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doc of documents">
+            <td>{{ doc.fileName }}</td>
+            <td>{{ doc.description }}</td>
+            <td>{{ doc.fileSize }}</td>
+            <td>
+              <!-- View button -->
+              <button 
+                *ngIf="role === 'admin' || role === 'viewer' || role === 'editor'"
+                class="btn btn-sm btn-primary me-1"
+                (click)="viewDocument(doc)">
+                View
+              </button>
+            
+              <!-- Download button (only admin can download, for example) -->
+              <button 
+                *ngIf="role === 'admin'" 
+                class="btn btn-sm btn-success me-1" 
+                (click)="downloadDocument(doc)">
+                Download
+              </button>
+            
+              <!-- Edit button (only admin or editor) -->
+              <button 
+                *ngIf="role === 'admin' || role === 'editor'" 
+                class="btn btn-sm btn-warning me-1" 
+                (click)="editDocument(doc)">
+                Edit
+              </button>
+            
+              <!-- Delete button (only admin) -->
+              <button 
+                *ngIf="role === 'admin'" 
+                class="btn btn-sm btn-danger" 
+                (click)="deleteDocument(doc)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
+      <ng-template #noDocs>
+        <p>No documents uploaded yet.</p>
+      </ng-template>
+    </div>
+
+    <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl" style="max-width:90%">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"> {{ selectedFile}} </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="height:80vh">
+            {{description}}
+          </div>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,32 @@
+<section class="container mt-5 wrapper" style="max-width: 500px;">
+  <h2 class="mb-4 text-center">Login</h2>
+
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <form>
+    <!-- Email -->
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" id="email" class="form-control" [(ngModel)]="email" name="email" required />
+    </div>
+
+    <!-- Password -->
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" required />
+    </div>
+
+    <!-- Submit -->
+    <button type="button" class="btn btn-primary w-100" (click)="submit()" [disabled]="loading">
+      {{ loading ? 'Logging…' : 'Login' }}
+    </button>
+
+    <!-- Register link -->
+    <div class="mt-3 text-center">
+      <p class="mb-0">
+        Don't have an account?
+        <a routerLink="/register" class="text-decoration-none">Register</a>
+      </p>
+    </div>
+  </form>
+</section>

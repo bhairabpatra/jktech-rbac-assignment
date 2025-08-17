@@ -1,0 +1,35 @@
+<h2 class="mb-4">Permission Management</h2>
+
+<div class="table-responsive">
+  <table class="table table-bordered table-striped align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>User</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Update role permissions</th>
+        
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <span class="badge bg-primary">{{ user.role }}</span>
+        </td>
+        <td>
+          <select [(ngModel)]="user.role" class="form-select">
+            <option value="Viewer">Viewer</option>
+            <option value="Editor">Editor</option>
+            <option value="Admin">Admin</option>
+          </select>
+        </td>
+        <td>
+          <button class="btn btn-primary" (click)="updateRole(user)">Update</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

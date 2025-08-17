@@ -1,0 +1,11 @@
+<div class="container text-center mt-5">
+    <h1 class="display-3 text-danger">404</h1>
+    <h2 class="mb-4">Page Not Found</h2>
+    <p class="text-muted mb-4">
+      The page you are looking for doesn’t exist.
+    </p>
+  
+    <a *ngIf="!isLoggedIn" routerLink="/login" class="btn btn-primary">Go to Login</a>
+    <a *ngIf="isLoggedIn" routerLink="/dashboard" class="btn btn-success">Go to Dashboard</a>
+  </div>
+  

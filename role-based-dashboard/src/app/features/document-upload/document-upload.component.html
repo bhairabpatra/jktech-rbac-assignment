@@ -1,0 +1,49 @@
+<div class="mt-4">
+    <h2>Upload Document</h2>
+  
+    <!-- File input -->
+    <div class="mb-3">
+      <label for="file" class="form-label">Choose File</label>
+      <input type="file" id="file" class="form-control" (change)="onFileSelected($event)">
+    </div>
+  
+    <!-- Description -->
+    <div class="mb-3">
+      <label for="desc" class="form-label">Description</label>
+      <input type="text" id="desc" class="form-control" [(ngModel)]="description">
+    </div>
+  
+    <!-- Upload button -->
+    <button class="btn btn-primary" (click)="uploadDocument()" [disabled]="isUploading">
+      {{ isUploading ? 'Uploading...' : 'Upload' }}
+    </button>
+  
+    <hr>
+  
+    <!-- Document list -->
+    <div class="mt-4">
+      <h4>Uploaded Documents</h4>
+      <table class="table table-bordered" *ngIf="documents.length > 0; else noDocs">
+        <thead>
+          <tr>
+            <th>File Name</th>
+            <th>Description</th>
+            <th>MIME Type</th>
+            <th>Size (KB)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doc of documents">
+            <td>{{ doc.fileName }}</td>
+            <td>{{ doc.description }}</td>
+            <td>{{ doc.mimeType }}</td>
+            <!-- <td>{{ (doc.fileSize / 1024) | number:'1.0-2' }}</td> -->
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #noDocs>
+        <p>No documents uploaded yet.</p>
+      </ng-template>
+    </div>
+  </div>
+  
