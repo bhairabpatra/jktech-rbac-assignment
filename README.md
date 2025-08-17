@@ -53,6 +53,14 @@ It ensures that users have access only to the actions permitted by their assigne
 
 ---
 
+![Architecture Diagram](img-assets/1.png)
+![Architecture Diagram](img-assets/2.png)
+![Architecture Diagram](img-assets/3.png)
+![Architecture Diagram](img-assets/4.png)
+![Architecture Diagram](img-assets/5.png)
+![Architecture Diagram](img-assets/6.png)
+![Architecture Diagram](img-assets/7.png)
+
 ##  Tech Stack
 
 - **NestJS** – Microservice framework
