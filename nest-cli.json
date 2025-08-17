@@ -1,0 +1,29 @@
+{
+  "monorepo": true,
+  "root": "apps/main",
+  "sourceRoot": "apps/main/src",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/main/tsconfig.app.json"
+  },
+  "projects": {
+    "main": {
+      "type": "application",
+      "root": "apps/main",
+      "entryFile": "main",
+      "sourceRoot": "apps/main/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/main/tsconfig.app.json"
+      }
+    },
+    "mock-ingestion-service": {
+      "type": "application",
+      "root": "apps/mock-ingestion-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/mock-ingestion-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/mock-ingestion-service/tsconfig.app.json"
+      }
+    }
+  }
+}
