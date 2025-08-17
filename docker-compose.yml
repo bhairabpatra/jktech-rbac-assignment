@@ -106,7 +106,7 @@ services:
     ports:
       - "4200:4200"
     volumes:
-      - ./angular-app:/app
+      - ./role-based-dashboard:/app
       - /app/node_modules
     depends_on:
       - api-gateway
