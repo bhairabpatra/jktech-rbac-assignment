@@ -61,6 +61,11 @@ It ensures that users have access only to the actions permitted by their assigne
 ![Architecture Diagram](img-assets/6.png)
 ![Architecture Diagram](img-assets/7.png)
 
+## [Swagger UI](http://localhost:3000/docs)
+![Architecture Diagram](img-assets/Swagger_ui.png)
+
+
+
 ##  Tech Stack
 
 - **NestJS** – Microservice framework
