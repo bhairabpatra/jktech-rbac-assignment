@@ -5,15 +5,19 @@
 https://docs.nestjs.com/controllers#controllers
 */
 
-import { Body, Controller, Get, Inject, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Post, Put, UseFilters, UseInterceptors } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { TransformInterceptor } from 'src/common/interceptors/transform.interceptor';
+import { AllExceptionsFilter } from 'src/common/filters/exception.filter';
+import { LoginUserDto } from './dto/login-user.dto';
 
 @Controller('user')
 @ApiTags('Users management')
-// @UseInterceptors(TransformInterceptor)
+@UseInterceptors(TransformInterceptor)
+@UseFilters(AllExceptionsFilter) // controller scoped
 export class UserController {
   constructor(
     @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
@@ -29,8 +33,8 @@ export class UserController {
   }
 
   @Post('login-user')
-  async doLogin(@Body() createUserDto: CreateUserDto) {
-    const { email, password } = createUserDto;
+  async doLogin(@Body() loginUserDto: LoginUserDto) {
+    const { email, password } = loginUserDto;
     const response = await lastValueFrom(
       this.userClient.send({ cmd: 'login_user' }, { email, password }),
     );

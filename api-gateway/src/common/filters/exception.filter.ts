@@ -1,35 +1,38 @@
-/* eslint-disable prettier/prettier */
-// src/common/filters/http-exception.filter.ts
 import {
   ExceptionFilter,
   Catch,
   ArgumentsHost,
   HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
-@Catch(HttpException) // catches all HttpExceptions (403, 404, etc.)
+@Catch() // catch everything
 export class AllExceptionsFilter implements ExceptionFilter {
-  catch(exception: HttpException, host: ArgumentsHost) {
-    const ctx = host.switchToHttp()
+  catch(exception: unknown, host: ArgumentsHost) {
+    const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    const status = exception.getStatus();
-    const exceptionResponse: any = exception.getResponse();
+    let status = HttpStatus.INTERNAL_SERVER_ERROR;
+    let message: any = 'Internal server error';
 
-    const message =
-      typeof exceptionResponse === 'string'
-        ? exceptionResponse
-        : exceptionResponse.message || 'Unexpected error';
+    if (exception instanceof HttpException) {
+      status = exception.getStatus();
+      const res = exception.getResponse();
+      message =
+        typeof res === 'string'
+          ? res
+          : (res as any).message || exception.message;
+    } else if (exception instanceof Error) {
+      message = exception.message;
+    }
 
     response.status(status).json({
-      success: false,
       statusCode: status,
-      error: exceptionResponse.error || 'error',
       message,
-      timestamp: new Date().toISOString(),
       path: request.url,
+      timestamp: new Date().toISOString(),
     });
   }
 }

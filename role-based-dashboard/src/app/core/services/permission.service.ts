@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
+import { ApiResponse, User } from '../models/user.model';
 
 // match with your backend Role enum
 export enum Role {
@@ -10,11 +11,8 @@ export enum Role {
   Admin = 'admin',
 }
 
-export interface User {
-  id: string;
-  email: string;
-  role: Role;
-}
+type UsersResponse = ApiResponse<User[]>;
+
 
 @Injectable({
   providedIn: 'root',
@@ -28,8 +26,8 @@ export class PermissionService {
     return this.auth.userRole() as Role;
   }
 
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiBaseUrl}/all-user`);
+  getUsers(): Observable<UsersResponse> {
+    return this.http.get<UsersResponse>(`${this.apiBaseUrl}/all-user`);
   }
 
   updateUserRole(userId: string, role: Role): Observable<{ message: string }> {

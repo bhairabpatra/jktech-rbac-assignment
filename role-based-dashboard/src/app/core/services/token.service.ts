@@ -24,7 +24,7 @@ export class TokenService {
   public payload$: Observable<JwtPayload | null> =
     this._payload$.asObservable();
 
-  setToken(token: string, refreshToken?: string): void {
+  setToken(token: string): void {
     localStorage.setItem(this.TOKEN_KEY, token);
     this._payload$.next(this.decodeToken(token));
   }

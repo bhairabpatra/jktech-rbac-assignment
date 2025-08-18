@@ -52,20 +52,8 @@ export class AuthService {
       expiresIn: '15m',
     });
 
-    const refreshToken = await this.jwtService.signAsync(
-      { sub: user.id },
-      { expiresIn: '7d' },
-    );
-    
-    const hashedRefresh = await bcrypt.hash(refreshToken, SALT_ROUNDS);
-    await this.usersService.setCurrentHashedRefreshToken(
-      user.id,
-      hashedRefresh,
-    );
-
     return {
-      accessToken,
-      refreshToken,
+      accessToken
     };
   }
 

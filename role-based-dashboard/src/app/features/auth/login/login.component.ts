@@ -40,8 +40,10 @@ export class LoginComponent {
     this.loading = true;
     this.auth.login({ email: this.email, password: this.password }).subscribe({
       next: (res) => {
-        this.token.setToken(res.accessToken);
-        this.router.navigate(['/dashboard']);
+        if (res.success) {
+          this.token.setToken(res.data.accessToken);
+          this.router.navigate(['/dashboard']);
+        }
       },
       error: (err) => {
         this.error = err.error?.message || 'Login failed';

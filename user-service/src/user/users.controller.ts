@@ -6,6 +6,7 @@ import { AuthService } from 'src/user/auth.service';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { Roles } from 'src/decorator/roles.decorator';
 import { Role } from 'src/enums/role.enum';
+import { LoginUserDto } from './dto/login-user.dto';
 
 @Controller('')
 export class UsersController {
@@ -17,7 +18,7 @@ export class UsersController {
   }
 
   @MessagePattern({ cmd: 'login_user' })
-  async loginUser(@Payload() data: CreateUserDto) {
+  async loginUser(@Payload() data: LoginUserDto) {
     return await this.usersService.login(data.email, data.password);
   }
 
