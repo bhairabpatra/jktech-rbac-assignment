@@ -10,7 +10,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost', // since MySQL is exposed on localhost
+      host: 'mysql',
       port: 3306,
       username: 'root',
       password: 'rootpass',
@@ -19,7 +19,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       autoLoadEntities: true, // automatically load entity classes
       synchronize: true, // DO NOT use true in production
     }),
-    DocumentsModule],
+    DocumentsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

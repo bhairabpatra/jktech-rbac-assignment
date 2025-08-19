@@ -5,12 +5,29 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: userDB
+      MYSQL_DATABASE: userdb
     ports:
       - "3306:3306"
     volumes:
       - mysql_dev_data:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - microservices-network
+
+  # phpMyAdmin for database management
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: rootpass
+      MYSQL_ROOT_PASSWORD: rootpass
+    depends_on:
+      - mysql
     networks:
       - microservices-network
 
@@ -38,7 +55,7 @@ services:
       - USER_SERVICE_URL=http://user-service:3001
       - DOCUMENTS_SERVICE_URL=http://document-service:3002
       - INJECTION_SERVICE_URL=http://ingestion-service:3003
-      - DATABASE_URL=mysql://root:rootpass@mysql:3306/userDB
+      - DATABASE_URL=mysql://root:rootpass@mysql:3306/userdb
     depends_on:
       - mysql
       - redis
@@ -56,7 +73,7 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
-      - DATABASE_URL=mysql://root:rootpass@mysql:3306/userDB
+      - DATABASE_URL=mysql://root:rootpass@mysql:3306/userdb
     depends_on:
       - mysql
       - redis
@@ -74,7 +91,7 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
-      - DATABASE_URL=mysql://root:rootpass@mysql:3306/userDB
+      - DATABASE_URL=mysql://root:rootpass@mysql:3306/userdb
     depends_on:
       - mysql
       - redis
@@ -92,7 +109,7 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
-      - DATABASE_URL=mysql://root:rootpass@mysql:3306/userDB
+      - DATABASE_URL=mysql://root:rootpass@mysql:3306/userdb
     depends_on:
       - mysql
       - redis
@@ -104,10 +121,7 @@ services:
       context: ./role-based-dashboard
       dockerfile: Dockerfile
     ports:
-      - "4200:4200"
-    volumes:
-      - ./role-based-dashboard:/app
-      - /app/node_modules
+      - "4200:80"
     depends_on:
       - api-gateway
     networks:
@@ -122,4 +136,4 @@ volumes:
   redis_dev_data:
 
 
- ## docker-compose -f docker-compose.yml up --build
+ ## docker-compose -f docker-compose.yml up --build  docker-compose build angular-app --no-cache
